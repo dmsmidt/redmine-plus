@@ -1,0 +1,65 @@
+#tq-timer {
+  position: relative;
+  top: 4px;
+  width: 185px;
+  height: 15px;
+  border: 0;
+}
+
+.tq-timer-toggle {
+  float: left;
+}
+
+.task {
+  transition: background-color 0.5s;
+}
+
+.task.tq-active-timer {
+  box-shadow: 0 0 8px green;
+}
+
+.task.tq-paused-timer {
+  box-shadow: 0 0 8px red;
+}
+
+.task .id {
+  padding-top: 3px;
+}
+
+.task.tq-active-timer .id .t:after,
+.task.tq-paused-timer .id .t:after,
+.task.tq-start-timer  .id .t:after {
+  margin-left: 5px;
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: green;
+  transition: background-color 0.5s;
+}
+
+.task.tq-start-timer  .id .t:after {
+  animation: pulsate 1s ease-out;
+  animation-iteration-count: infinite;
+  opacity: 0.0
+}
+
+.task.tq-paused-timer .id .t:after {
+  background-color: red;
+}
+
+.task .id .tq-timer-toggle {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.task:not(.hide-timer-toggle):hover .id .tq-timer-toggle {
+  opacity: 1;
+}
+
+@keyframes pulsate {
+  0% {transform: scale(0.1, 0.1); opacity: 0.0;}
+  50% {opacity: 1.0;}
+  100% {transform: scale(1.2, 1.2); opacity: 0.0;}
+}

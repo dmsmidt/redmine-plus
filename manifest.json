@@ -1,0 +1,36 @@
+{
+  "manifest_version": 2,
+
+  "name": "TQ Redmine Plus",
+  "description": "Adds helpful magic to Redmine.",
+  "version": "0.3",
+  "icons": { "16": "icon16.png",
+           "48": "icon48.png",
+          "128": "icon128.png" },
+  "applications": {
+    "gecko": {
+      "id": "tqRedminePlus@triquanta.nl"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true,
+    "open_in_tab": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://support.triquanta.nl/rb/taskboards/*",
+        "*://support.triquanta.nl/issues/*",
+        "*://support.triquanta.nl/issues/*/time_entries/new"
+      ],
+      "js": ["jquery-2.2.3.min.js", "tq_redmine_plus_shared.js", "tq_redmine_plus.js"],
+      "css": ["tq_redmine_plus.css"],
+      "runt_at": "document_end"
+    }
+  ]
+}

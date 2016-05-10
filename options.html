@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head><title>TQ Redmine Plus Options</title></head>
+  <body>
+    <label>
+    Use timer functionality on the taskboard:
+    <input type="checkbox" name="redmine-taskboard-use-timer">
+    </label>
+    <br/><br/>
+    <label>
+    Automatically show all properties in the issue form:
+    <input type="checkbox" name="redmine-show-all-properties">
+    </label>
+    <br/><br/>
+    Your Redmine user ID:
+    <input type="number" name="redmine-user-id" placeholder="Redmine user ID">
+    (only needed when not using the timer functionality)
+    <br/><br/>
+
+    <div id="status"></div>
+    <br/>
+    <button id="save">Save</button>
+
+    <script src="tq_redmine_plus_shared.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>
