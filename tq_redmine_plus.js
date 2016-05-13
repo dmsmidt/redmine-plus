@@ -9,6 +9,13 @@ if ($taskboard) {
     $toolbarLinksTimer,
     userId = 0;
 
+  // Use sticky header.
+  getStorage({redmineTaskboardStickyToolbar: true}, function(items) {
+    if (items.redmineTaskboardStickyToolbar) {
+      $('html').addClass('tq-sticky-toolbar');
+    }
+  });
+
   // Initialize timer if configured (or by default).
   getStorage({redmineTaskboardTimer: true}, function(items) {
     if (!items.redmineTaskboardTimer) {

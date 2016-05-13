@@ -63,3 +63,16 @@
   50% {opacity: 1.0;}
   100% {transform: scale(1.2, 1.2); opacity: 0.0;}
 }
+
+.tq-sticky-toolbar #toolbar {
+  position: fixed;
+  z-index: 999;
+}
+
+.tq-sticky-toolbar #main {
+  padding-top: 30px;
+}
+
+#toolbar .links {
+  background-color: #CCCCCC;
+}
