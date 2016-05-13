@@ -4,12 +4,10 @@ var $taskboard = $("#taskboard");
 
 // Only enable taskboard enhancement if there is a taskboard.
 if ($taskboard) {
-  var taskboarChangeTimer,
+  var $tasks = $('.task'),
+    taskboarChangeTimer,
     $toolbarLinksTimer,
     userId = 0;
-  
-  // Get tasks (on taskboard).
-  var $tasks = $('.task');
 
   // Initialize timer if configured (or by default).
   getStorage({redmineTaskboardTimer: true}, function(items) {
@@ -126,8 +124,21 @@ if ($taskboard) {
 
       // Attach our own open task click event, make sure we don't attach multiple handlers.
       $task.off('click.tq-task').on('click.tq-task', function() {
-        var storyId = $task.closest('tr').find('.story > .story_tooltip > a').text();
-        $('.time_entry_comments').val('#'+storyId+' ');
+        var storyId = $task.closest('tr').find('.story > .story_tooltip > a').text(),
+          $taskEditorDialog = $('.task_editor_dialog');
+
+        // Attach click hander to the task submit buttons, to be able to remove
+        // our prefilled comment if nou hours are given.
+        // This prevents 0.0 hours time log entries.
+        $taskEditorDialog.find('button').off('click.tq-task mousedown.tq-task keydown.tq-task').on('click.tq-task mousedown.tq-task keydown.tq-task', function() {
+          if ($('input.time_entry_hours').val().length == 0) {
+            $('textarea.time_entry_comments').val('');
+          }
+        });
+
+        // Pre-fil content
+        $taskEditorDialog.find('textarea.time_entry_comments').val('#'+storyId+' ');
+        // Set log time user.
         getStorage({
           redmineUserId: '',
           redmineTaskboardTimer: true
@@ -175,3 +186,11 @@ getStorage({
 if (deeptest('storyId') && storyId.length > 0) {
   $('#time_entry_comments').val('#'+storyId+' ');
 }
+
+// Attach click hander to the issue update submit buttons, to be able to remove
+// our prefilled comment if nou hours are given.
+$('#issue-form').on('submit', function() {
+  if ($('#time_entry_hours').val().length == 0) {
+    $('#time_entry_comments').val('');
+  }
+});
