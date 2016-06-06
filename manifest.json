@@ -3,7 +3,7 @@
 
   "name": "TQ Redmine Plus",
   "description": "Adds helpful magic to Redmine.",
-  "version": "0.4",
+  "version": "0.5",
   "icons": { "16": "icon16.png",
            "48": "icon48.png",
           "128": "icon128.png" },
@@ -32,5 +32,8 @@
       "css": ["tq_redmine_plus.css"],
       "runt_at": "document_end"
     }
+  ],
+  "web_accessible_resources": [
+    "images/*.png"
   ]
 }

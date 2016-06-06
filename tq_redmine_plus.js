@@ -28,25 +28,61 @@ if ($taskboard) {
     $toolbarLinksTimer.attr('src', '/').on('load', function() {
       // Get iframe content.
       var $issuePage = $(this).contents(),
-        $timer = $issuePage.find('#time-tracker-menu'),
-        $startTimer = $timer.find('.icon-start'),
+        $originalTimer = $issuePage.find('#time-tracker-menu'),
+        $originalStartTimer = $originalTimer.find('.icon-start-action'),
+        $originalStopTimer = $originalTimer.find('.icon-stop-action'),
         modifiedTimer;
-      
-      // Store current users id.
+
+      // Store current users id in the global scope.
       userId = $issuePage.find('#loggedas a').attr('href').substring(7);
       
       // Change / enhance timer links when there are changes.
       // Every minute this is triggered at least once due to timer updates.
-      $timer.on("DOMSubtreeModified", function() {
+      $originalTimer.on("DOMSubtreeModified", function() {
         // Make sure we don't run this multiple times in a row.
         clearTimeout(modifiedTimer);
         modifiedTimer = setTimeout(function() {
           // Get tasks again and remove active classes.
-          $tasks = $('.task').removeClass('tq-active-timer tq-paused-timer tq-start-timer hide-timer-toggle');
-          // Get active issue.
-          var $timerIcon = $timer.find('a.icon');
-          var issueId = $timerIcon.text().substring(1);
-          
+          $tasks = $('.task').removeClass('tq-active-timer tq-paused-timer tq-start-timer');
+          // Get timer icon, we can use its Class to detect the timer status.
+          var $timerIcon = $originalTimer.find('a.icon'),
+            timerIsRunning = $timerIcon.hasClass('icon-clock'),
+            timerIsPaused = $timerIcon.hasClass('icon-pause'),
+            // Get active issue.
+            issueId = $timerIcon.text().substring(1);
+
+          $tasks.each(function() {
+            var $task = $(this);
+            // Add timer control to tasks.
+            if ($task.find('.tq-timer-button ').length == 0) {
+              // Get tasks issue id.
+              var issueID = $task.find('.id .v').text();
+
+              // Create timer start/pause toggle.
+              var $timerToggle = $('<a class="tq-timer-button tq-timer-toggle tq-timer-start" "href="#"></a>').on('click.tq-timer-toggle', function() {
+                if (timerIsPaused) {
+                  $originalStartTimer[0].click();
+                }
+                else if (timerIsRunning) {
+
+                }
+                else {
+                  // Change timer to use this issue (point iFrame to the issue page).
+                  $toolbarLinksTimer.attr('src', '/issues/' + issueID);
+                  $task.addClass('tq-start-timer');
+                  // Starting the actual timer will be done on load of the iframe.
+                }
+              });
+
+              // Create timer stop button.
+              var $timerStop = $('<a class="tq-timer-button tq-timer-stop" "href="#"></a>').on('click.tq-timer-stop', function() {
+                $originalStopTimer[0].click();
+              });
+
+              $task.find('.id .t').prepend($timerToggle, $timerStop);
+            }
+          });
+
           // If active issue is found.
           if (issueId > 0) {
             // Add special class to task block.
@@ -54,43 +90,49 @@ if ($taskboard) {
             var $timerToggle = $timerTask.find('.tq-timer-toggle');
             
             // If timer is running.
-            if ($timerIcon.hasClass('icon-clock')) {
+            if (timerIsRunning) {
+              $timerToggle.addClass('tq-timer-pause').removeClass('tq-timer-start');
+
               $timerTask.addClass('tq-active-timer');
-              $timerToggle.text('active');
+              $timerToggle.addClass('tq-timer-pause');
+              //$timerToggle.text('pause').addClass('tq-timer-pause');
             }
-            else if ($timerIcon.hasClass('icon-pause')) {
-              $timerTask.addClass('tq-paused-timer');
-              $timerToggle.text('paused');
+            else if (timerIsPaused) {
+              $timerToggle.removeClass('tq-timer-pause').addClass('tq-timer-start');
+
+              $timerTask.addClass('tq-paused-timer').addClass('tq-timer-pause');
+             // $timerToggle.text('continue');
             }
-            // @todo add pause / stop actions, move click event add here.
-            //.off('click.tq-start').on('click.tq-start', 
+            else {
+              $timerToggle.removeClass('tq-timer-pause').addClass('tq-timer-start');
+            }
 
             // Hide other timer toggles.
             $tasks.not('#issue_' + issueId).addClass('hide-timer-toggle');
           }
           else {
             // Reset tasks timer toggle text.
-            $tasks.find('.tq-timer-toggle').text('start');
+            //$tasks.find('.tq-timer-toggle').text('start');
           }
           
           // Make sure all timer links open in a new tab.
-          $timer.find('a').attr('target', '_blank');
+          $originalTimer.find('a').attr('target', '_blank');
 
-          // After clicking start/pause timer update tasks. 
-          $timer.find('.icon-start-action, .icon-pause-action').off('click.tq').on('click.tq', function() {
-            $timer.trigger('DOMSubtreeModified');
+          // After clicking start/pause timer in the bar: update tasks.
+          $originalTimer.find('.icon-start-action, .icon-pause-action').off('click.tq').on('click.tq', function() {
+            $originalTimer.trigger('DOMSubtreeModified');
           });
           
-          // After clicking stop timer, reset this iframe. 
-          // Stop page is opened in new tab.
-          $timer.find('.icon-stop-action').off('click.tq').on('click.tq', function() {
+          // After clicking stop timer in the bar: reset this iframe and
+          // open the stop page in new tab.
+          $originalTimer.find('.icon-stop-action').off('click.tq').on('click.tq', function() {
             $toolbarLinksTimer.attr('src', '/');
           });
         }, 200);
       }).trigger('DOMSubtreeModified');
       
       // Move the timer to the top of the page in the iFrame.
-      $timer.detach().prependTo($issuePage.find('body'));
+      $originalTimer.detach().prependTo($issuePage.find('body'));
       
       // Change the loaded page styling and hide not needed elements.
       // .css() doesn't work for some reason.
@@ -99,35 +141,18 @@ if ($taskboard) {
       $issuePage.find('#wrapper').hide();
       
       // Auto start timer on load.
-      if ($startTimer.length) {
-        $startTimer[0].click();
+      if ($originalStartTimer.length) {
+        $originalStartTimer[0].click();
       }
     });
   });
 
-  var initTaskboardTasks = function() {
+  var processTaskboardTasks = function() {
     // Get tasks again (on taskboard).
     $tasks = $('.task');
 
     $tasks.each(function() {
       var $task = $(this);
-
-      getStorage({redmineTaskboardTimer: true}, function(items) {
-          if (items.redmineTaskboardTimer) {
-          // Add timer toggle.
-          if ($task.find('.tq-timer-toggle').length == 0) {
-            // Get tasks issue id.
-            var issueID = $task.find('.id .v').text();
-            
-            // Change timer to use this issue.
-            var $timerToggle = $('<a class="tq-timer-toggle" "href="#">start</a>').on('click.tq-start', function() {
-                $toolbarLinksTimer.attr('src', '/issues/' + issueID);
-                $task.addClass('tq-start-timer');
-            });
-            $task.find('.id .t').prepend($timerToggle);
-          }
-        }
-      });
 
       // Attach our own open task click event, make sure we don't attach multiple handlers.
       $task.off('click.tq-task').on('click.tq-task', function() {
@@ -167,12 +192,12 @@ if ($taskboard) {
     // Make sure we don't run this multiple times in a row.
     clearTimeout(taskboarChangeTimer);
     taskboarChangeTimer = setTimeout(function() {
-      initTaskboardTasks();
+      processTaskboardTasks();
     }, 200);
   }); 
   
   // Trigger once on load.
-  initTaskboardTasks();
+  processTaskboardTasks();
 }
 
 // Get story ID (parent issue on full issue view).

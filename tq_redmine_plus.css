@@ -6,10 +6,6 @@
   border: 0;
 }
 
-.tq-timer-toggle {
-  float: left;
-}
-
 .task {
   transition: background-color 0.5s;
 }
@@ -49,13 +45,39 @@
   background-color: red;
 }
 
-.task .id .tq-timer-toggle {
+.task .id .tq-timer-button {
+  display: block;
+  float: left;
+  width: 10px;
+  height: 10px;
+  background-position: -3px -3px;
+  background-repeat: no-repeat;
   opacity: 0;
   transition: opacity 0.5s;
+  cursor: pointer;
 }
 
-.task:not(.hide-timer-toggle):hover .id .tq-timer-toggle {
+.task:not(.hide-timer-toggle):hover .id .tq-timer-button,
+.task.tq-active-timer .id .tq-timer-button {
   opacity: 1;
+}
+
+.task:not(.hide-timer-toggle):hover .id .tq-timer-button:hover {
+  opacity: 0.5;
+}
+
+.task .id .tq-timer-start,
+.task .id .tq-timer-continue
+{
+  background-image: url('chrome-extension://__MSG_@@extension_id__/images/start.png') ;
+}
+
+.task .id .tq-timer-pause {
+  background-image: url('chrome-extension://__MSG_@@extension_id__/images/pause.png');
+}
+
+.task .id .tq-timer-stop {
+  background-image: url('chrome-extension://__MSG_@@extension_id__/images/stop.png');
 }
 
 @keyframes pulsate {
