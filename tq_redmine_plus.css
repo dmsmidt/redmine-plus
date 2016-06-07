@@ -50,6 +50,7 @@
   float: left;
   width: 10px;
   height: 10px;
+  margin-right: 2px;
   background-position: -3px -3px;
   background-repeat: no-repeat;
   opacity: 0;
@@ -57,8 +58,10 @@
   cursor: pointer;
 }
 
-.task:not(.hide-timer-toggle):hover .id .tq-timer-button,
-.task.tq-active-timer .id .tq-timer-button {
+.task:not(.hide-timer-toggle):hover .id .tq-timer-toggle,
+.task.tq-active-timer .id .tq-timer-button,
+.task.tq-paused-timer .id .tq-timer-button
+{
   opacity: 1;
 }
 
