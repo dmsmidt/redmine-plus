@@ -6,10 +6,6 @@
   border: 0;
 }
 
-.tq-timer-toggle {
-  float: left;
-}
-
 .task {
   transition: background-color 0.5s;
 }
@@ -23,45 +19,93 @@
 }
 
 .task .id {
-  padding-top: 3px;
+  padding: 3px 3px 0 3px;
+  line-height: 10px;
 }
 
 .task.tq-active-timer .id .t:after,
 .task.tq-paused-timer .id .t:after,
 .task.tq-start-timer  .id .t:after {
   margin-left: 5px;
-  content: '';
-  display: inline-block;
-  width: 8px;
-  height: 8px;
+  content: ' ';
+  display: block;
+  position: relative;
+  float: right;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background-color: green;
   transition: background-color 0.5s;
 }
 
 .task.tq-start-timer  .id .t:after {
-  animation: pulsate 1s ease-out;
+  animation: pulsate 1s ease-in-out;
   animation-iteration-count: infinite;
-  opacity: 0.0
+  opacity: 0.0;
 }
 
 .task.tq-paused-timer .id .t:after {
-  background-color: red;
+  background-color: #CC0000;
 }
 
-.task .id .tq-timer-toggle {
+.task .id .tq-timer-button {
+  display: block;
+  float: left;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
   opacity: 0;
   transition: opacity 0.5s;
+  cursor: pointer;
 }
 
-.task:not(.hide-timer-toggle):hover .id .tq-timer-toggle {
+.task:not(.hide-timer-toggle):hover .id .tq-timer-toggle,
+.task.tq-active-timer .id .tq-timer-button,
+.task.tq-paused-timer .id .tq-timer-button
+{
   opacity: 1;
 }
 
+.task:not(.hide-timer-toggle):hover .id .tq-timer-start:hover,
+.task:not(.hide-timer-toggle):hover .id .tq-timer-continue:hover,
+.task:not(.hide-timer-toggle):hover .id .tq-timer-pause:hover,
+/* Only change opacity for stop button if task is active or paused */
+.task.tq-active-timer:not(.hide-timer-toggle):hover .id .tq-timer-stop:hover,
+.task.tq-paused-timer:not(.hide-timer-toggle):hover .id .tq-timer-stop:hover
+{
+  opacity: 0.5;
+}
+
+.task .id .tq-timer-start:after,
+.task .id .tq-timer-continue:after
+{
+  display: block;
+  content: ' ';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 0 5px 10px;
+  border-color: transparent transparent transparent #CC0000;
+}
+
+.task .id .tq-timer-pause {
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 0 4px 0 4px;
+  border-color: #CC0000;
+}
+
+.task .id .tq-timer-stop {
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: #CC0000;
+}
+
 @keyframes pulsate {
-  0% {transform: scale(0.1, 0.1); opacity: 0.0;}
+  0% {opacity: 0.0;}
   50% {opacity: 1.0;}
-  100% {transform: scale(1.2, 1.2); opacity: 0.0;}
+  100% {opacity: 0.0;}
 }
 
 .tq-sticky-toolbar #toolbar {
