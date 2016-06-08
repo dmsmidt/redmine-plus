@@ -32,8 +32,5 @@
       "css": ["tq_redmine_plus.css"],
       "runt_at": "document_end"
     }
-  ],
-  "web_accessible_resources": [
-    "images/*.png"
   ]
 }
