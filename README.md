@@ -13,11 +13,12 @@ The following software has been tested to work (partially).
 
 ## Functionality 
 
+- Critical select lists enhanced with Chosen
 - Taskboard enhancement
     - Prefill "Time Entry Comments" of a task with the parent issue id (story)
     - Prefill "Time Entry User" of a task with the logged in user (no more accidentally booking time for someone else)
     - Show and navigate the timer in the navigation bar.
-    - Directly start timer from a task.
+    - Directly start/stop/pause timer from a task.
     - Visually show the timer status for the active task.
     - Sticky toolbar.
 - Full issue view
