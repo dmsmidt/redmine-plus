@@ -24,13 +24,14 @@
   "content_scripts": [
     {
       "matches": [
-        "*://support.triquanta.nl/rb/taskboards/*",
-        "*://support.triquanta.nl/issues/*",
-        "*://support.triquanta.nl/issues/*/time_entries/new"
+        "*://support.triquanta.nl/*"
       ],
-      "js": ["jquery-2.2.3.min.js", "tq_redmine_plus_shared.js", "tq_redmine_plus.js"],
-      "css": ["tq_redmine_plus.css"],
+      "js": ["libraries/jquery/jquery-2.2.3.min.js", "libraries/chosen/chosen.jquery.min.js", "tq_redmine_plus_shared.js", "tq_redmine_plus.js"],
+      "css": ["libraries/chosen/chosen.css", "tq_redmine_plus.css"],
       "runt_at": "document_end"
     }
+  ],
+  "web_accessible_resources": [
+    "libraries/chosen/*.png"
   ]
 }

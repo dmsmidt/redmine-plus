@@ -2,6 +2,8 @@ console.log('TQ Redmine Plus loaded');
 
 var $taskboard = $("#taskboard");
 
+$("#toolbar select, #quick-search select, select#add_filter_select").chosen();
+
 // Only enable taskboard enhancement if there is a taskboard.
 if ($taskboard) {
   var $tasks = $('.task'),
