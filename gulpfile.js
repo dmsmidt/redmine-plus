@@ -6,7 +6,7 @@ var gulp = require('gulp'),
   crx = require('gulp-crx-pack'),
   fs = require('fs');
 
-var src = ['./*', '!gulpfile.js', '!package.json', '!tq_redmine_plus.pem', '!README.md'];
+var src = ['./**', '!gulpfile.js', '!package.json', '!tq_redmine_plus.pem', '!README.md'];
 var buildName = 'tq_redmine_plus';
 
 gulp.task('default', function () {
