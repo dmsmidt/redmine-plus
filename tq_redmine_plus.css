@@ -6,6 +6,76 @@
   border: 0;
 }
 
+#backlogs_container .backlog {
+  background-color: #CCCCCC;
+}
+
+#backlogs_container .stories {
+  border-top: 1px solid #AAAAAA;
+  background-color: white;
+}
+
+#backlogs_container .status_id {
+  padding: 3px;
+}
+
+.backlog > a {
+  display: inline-block;
+  line-height: 1.2;
+  padding: 0 0.4em;
+  border: 1px solid #CC0000;
+  margin: 0.4em;
+  background-color: white;
+  cursor: pointer;
+}
+
+.backlog > a:first-child {
+  margin-left: 0.4em;
+}
+
+.backlog > a:hover {
+  text-decoration: none;
+  opacity: 0.7;
+  background-color: #CC0000;
+  color: white;
+}
+
+#backlogs_container .backlog .model {
+  transition: opacity 0.2s ease-in-out;
+}
+
+#backlogs_container .backlog .model.approved {
+  background: #00a300 !important;
+  opacity: .5;
+  color: white;
+}
+
+#backlogs_container .backlog .model.closed {
+  background: #b6b6b6 !important;
+  opacity: .5;
+}
+
+#backlogs_container .backlog .model.ready-for-test {
+  background: #ffd800 !important;
+  opacity: .5;
+  color: black;
+}
+
+#backlogs_container .backlog .model.rejected {
+  background: #CC0000 !important;
+  opacity: .5;
+  color: white;
+}
+
+#backlogs_container .backlog .model.in-progress {
+  color: #CC0000;
+  border-bottom: 1px solid #CC0000;
+}
+
+#backlogs_container .backlog .model:hover {
+  opacity: 1 !important;
+}
+
 .task {
   transition: background-color 0.5s;
 }
@@ -15,7 +85,7 @@
 }
 
 .task.tq-paused-timer {
-  box-shadow: 0 0 8px red;
+  box-shadow: 0 0 8px #CC0000;
 }
 
 .task .id {

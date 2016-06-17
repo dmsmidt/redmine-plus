@@ -1,7 +1,9 @@
 console.log('TQ Redmine Plus loaded');
 
-var $taskboard = $("#taskboard");
+var $taskboard = $("#taskboard"),
+  $backlogsContainer = $("#backlogs_container");
 
+// Enable chosen select for project switcher.
 $("#toolbar select, #quick-search select").chosen().on('change', function() {
   // Get onchange attribute code and execute it.
   var onchangeCode = $(this).attr('onchange');
@@ -10,9 +12,82 @@ $("#toolbar select, #quick-search select").chosen().on('change', function() {
   }
 });
 
+$(document).ready(function() {
+  if ($backlogsContainer) {
+
+    var $stories = $backlogsContainer.find('.story'),
+      $statusElements = $stories.find('.status_id > .t'),
+      originalStoryClasses = $stories.eq(0).attr('class');
+
+    $statusElements.data('original-classes', originalStoryClasses);
+
+    processBacklogs($statusElements);
+
+    $stories.on('DOMSubtreeModified', function (e) {
+      // Make sure we don't run this multiple times in a row.
+      clearTimeout(taskboarChangeTimer);
+      taskboarChangeTimer = setTimeout(function() {
+        processBacklogs($(e.currentTarget));
+      }, 200);
+    });
+
+    // Processing backlogs needs to wait at least a second to wait,
+    // otherwise some DOM elements aren't build.
+    // This is an experimental value.
+    setTimeout(function(){
+      var $backlogs = $backlogsContainer.find('.backlog');
+      processBacklogsDelayed($backlogs)
+    }, 800);
+  }
+});
+
+var processBacklogs = function($statusElements) {
+  // Add status classes to story list items.
+  $statusElements.each(function(index, item) {
+    var $itemStatus = $(item),
+      status = $itemStatus.text().replace(/[^a-z0-9]/g, function(s) {
+        var c = s.charCodeAt(0);
+        if (c == 32) return '-';
+        if (c >= 65 && c <= 90) return s.toLowerCase();
+        return ('000' + c.toString(16)).slice(-4);
+      });
+
+    $itemStatus.closest('.model').attr('class', $itemStatus.data('original-classes')).addClass(status);
+  });
+};
+
+var processBacklogsDelayed = function($backlogs) {
+  $backlogs.each(function () {
+    var $backlog = $(this),
+      $header = $backlog.find('.header'),
+      $menuItems = $header.find('.menu .items'),
+      $addStory = $menuItems.find('.add_new_story');
+
+    if ($backlog.hasClass('tq-processed')) {
+      return;
+    }
+
+    $backlog.addClass('tq-processed');
+
+    // Add first two menu items as visible links.
+    var $firstTwo = $menuItems.find('li').slice(0, 2).detach(),
+      $buttonLinks = $firstTwo.find('a');
+
+    $buttonLinks.eq(1).attr('target', '_blank');
+
+    $buttonLinks.insertAfter($header);
+
+    $addStory.on('mouseup', function() {
+      $backlog.find('select.tracker_id').val(12);
+    });
+
+  });
+};
+
 // Only enable taskboard enhancement if there is a taskboard.
 if ($taskboard) {
   var $tasks = $('.task'),
+    $stories = $('.story'),
     taskboarChangeTimer,
     $toolbarLinksTimer,
     userId = 0;
@@ -119,6 +194,7 @@ if ($taskboard) {
   var processTaskboardTasks = function() {
     // Get tasks again (on taskboard).
     $tasks = $('.task');
+    $stories = $('.story');
 
     $tasks.each(function() {
       var $task = $(this),
