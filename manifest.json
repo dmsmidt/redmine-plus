@@ -32,6 +32,7 @@
     }
   ],
   "web_accessible_resources": [
-    "libraries/chosen/*.png"
+    "libraries/chosen/*.png",
+    "tq-redmine-plus-injected-api.js"
   ]
 }

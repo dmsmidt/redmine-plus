@@ -1,9 +1,32 @@
 console.log('TQ Redmine Plus loaded');
 
+// Store things passed in from our custom TqRedminePlusStore API.
+internalStorage = {};
+
+// Listen for TqRedminePlusStore fired from the page with key/value pair data.
+$(document).on('TqRedminePlusStore', function(event) {
+  var dataFromPage = event.detail;
+  internalStorage[dataFromPage.key] = dataFromPage.value;
+
+  // Trigger additional event for the given key.
+  $(document).trigger(dataFromPage.key, [dataFromPage.value]);
+});
+
+// Inject the api store script directlty in the site instead of the extensions 
+// sandboxed environment. We do this to be able to send JS data of the orignial 
+// page to this extension script.
+var s = document.createElement('script');
+s.src = chrome.extension.getURL('tq-redmine-plus-injected-api.js');
+(document.head||document.documentElement).appendChild(s);
+s.onload = function() {
+  s.parentNode.removeChild(s);
+};
+
 var $taskboard = $("#taskboard"),
   $backlogsContainer = $("#backlogs_container");
 
-if ($taskboard) {
+// Define some global variables if there is a taskboard.
+if ($taskboard.length) {
   var $tasks = $('.task'),
     $stories = $('.story'),
     taskboarChangeTimer,
@@ -20,16 +43,21 @@ $("#toolbar select, #quick-search select").chosen().on('change', function() {
   }
 });
 
+// Generic function to create nice css class names for a given string.
+var createCssClass= function(text) {
+  return text.replace(/[^a-z0-9]/g, function(s) {
+    var c = s.charCodeAt(0);
+    if (c == 32) return '-';
+    if (c >= 65 && c <= 90) return s.toLowerCase();
+    return ('000' + c.toString(16)).slice(-4);
+  });
+};
+
 var processBacklogs = function($statusElements) {
   // Add status classes to story list items.
   $statusElements.each(function(index, item) {
     var $itemStatus = $(item),
-      status = $itemStatus.text().replace(/[^a-z0-9]/g, function(s) {
-        var c = s.charCodeAt(0);
-        if (c == 32) return '-';
-        if (c >= 65 && c <= 90) return s.toLowerCase();
-        return ('000' + c.toString(16)).slice(-4);
-      });
+      status = createCssClass($itemStatus.text());
 
     $itemStatus.closest('.model').attr('class', $itemStatus.data('original-classes')).addClass(status);
   });
@@ -145,9 +173,35 @@ var processTaskboardTasks = function() {
   });
 };
 
+var processTaskboardStories = function() {
+  $stories.each(function(){
+    var $story = $(this),
+      $tooltip = $story.find('.story_tooltip'),
+      storyId = $tooltip.find('a').text();
+
+    // Add unique id to every story table row.
+    $story.closest('tr').attr('id', 'story_' + storyId);
+  });
+
+  // React on when we get info about the tooltips (asynchronous).
+  $(document).on('taskboardTooltipData', function(event, taskboardTooltipData) {
+    $.each(taskboardTooltipData, function(storyId, tooltipData) {
+      var regEx = /Status<\/b>:\s(.*?)</g;
+      var match = regEx.exec(tooltipData);
+
+      if (typeof match[1] !== 'undefined') {
+        // Process tooltipData to get the status.
+        var statusClass = createCssClass(match[1]);
+
+        // Add class to the matching story row.
+        $('#story_' + storyId).attr('class', '').addClass(statusClass);
+      }
+    });
+  });
+};
 
 $(document).ready(function() {
-  if ($backlogsContainer) {
+  if ($backlogsContainer.length) {
     var $stories = $backlogsContainer.find('.story'),
       $statusElements = $stories.find('.status_id > .t'),
       originalStoryClasses = $stories.eq(0).attr('class');
@@ -174,7 +228,7 @@ $(document).ready(function() {
   }
 
   // Only enable taskboard enhancement if there is a taskboard.
-  if ($taskboard) {
+  if ($taskboard.length) {
     // Use sticky header.
     getStorage({redmineTaskboardStickyToolbar: true}, function(items) {
       if (items.redmineTaskboardStickyToolbar) {
@@ -285,6 +339,7 @@ $(document).ready(function() {
 
     // Trigger once on load.
     processTaskboardTasks();
+    processTaskboardStories();
   }
 });
 
