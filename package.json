@@ -5,10 +5,7 @@
   "main": "tq_redmine_plus.js",
   "dependencies": {},
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-crx-pack": "^1.0.1",
-    "gulp-gitignore": "^0.1.0",
-    "gulp-zip": "^3.2.0"
+    "web-ext": "^1.2.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -11,7 +11,11 @@ The following software has been tested to work (partially).
 
 ## Functionality 
 
-- Critical select lists enhanced with Chosen
+- Select lists enhanced with the Chosen plugin (project switcher)
+- Master backlog enhancement
+    - Stories are styled differently based on their status.
+    - Quick links to add a new story and go to the taskboard (new tab).
+    - Creating a new story will actually create a new story and not a deliverable.
 - Taskboard enhancement
     - Prefill "Time Entry Comments" of a task with the parent issue id (story)
     - Prefill "Time Entry User" of a task with the logged in user (no more accidentally booking time for someone else)
@@ -19,6 +23,7 @@ The following software has been tested to work (partially).
     - Directly start/stop/pause timer from a task.
     - Visually show the timer status for the active task.
     - Sticky toolbar.
+    - Colored rows based on the story status.
 - Full issue view
     - Always show all fields in the "Change properties " fieldset (no more clicking on "more").
     - On update, prefill the parent (story) ID in the log comment field.

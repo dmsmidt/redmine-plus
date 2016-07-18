@@ -14,7 +14,7 @@ trap 'rm -f "$pub" "$sig" "$zip"' EXIT
 
 # zip up the crx dir
 cwd=$(pwd -P)
-(cd "$dir" && zip -qr -9 -X "$cwd/$zip" . -x .git/\* build/\* node_modules/\* .idea/\*)
+(cd "$dir" && zip -qr -9 -X "$cwd/$zip" . -x .git/\* build/\* node_modules/\* .idea/\* ./.web-extension-id)
 
 # signature
 openssl sha1 -sha1 -binary -sign "$key" < "$zip" > "$sig"
@@ -34,5 +34,5 @@ sig_len_hex=$(byte_swap $(printf '%08x\n' $(ls -l "$sig" | awk '{print $5}')))
 (
   echo "$crmagic_hex $version_hex $pub_len_hex $sig_len_hex" | xxd -r -p
   cat "$pub" "$sig" "$zip"
-) > "$crx"
+) > "./build/$crx"
 echo "Wrote $crx"
