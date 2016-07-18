@@ -77,6 +77,16 @@
   background-color: rgba(255, 216, 0, 0.2);
 }
 
+#backlogs_container .backlog .model.ready-to-deploy {
+  background-color: #0062FF !important;
+  opacity: .75;
+  color: white;
+}
+
+#taskboard #tasks tr.ready-to-deploy {
+  background-color: rgba(0, 98, 255, 0.2);
+}
+
 #backlogs_container .backlog .model.rejected {
   background-color: #CC0000 !important;
   opacity: .5;
