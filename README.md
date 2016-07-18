@@ -6,10 +6,8 @@ This Chrome and Firefox plugins adds magic to Redmine. It particularity enhances
 
 The following software has been tested to work (partially).
 
-- Chrome 50
-- Firefox 45 (partially*), Firefox 49 (full)
-
-*) Firefox 45 - 48 don't support custom settings. The extension is functional but all default settings are used.
+- Chrome 50+
+- Firefox 48+
 
 ## Functionality 
 
