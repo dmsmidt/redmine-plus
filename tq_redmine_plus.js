@@ -63,6 +63,7 @@ var processBacklogs = function($statusElements) {
   });
 };
 
+// Enhance the backlog page after a delay.
 var processBacklogsDelayed = function($backlogs) {
   $backlogs.each(function () {
     var $backlog = $(this),
@@ -80,7 +81,9 @@ var processBacklogsDelayed = function($backlogs) {
     var $firstTwo = $menuItems.find('li').slice(0, 2).detach(),
       $buttonLinks = $firstTwo.find('a');
 
-    $buttonLinks.eq(1).attr('target', '_blank');
+    if (!$buttonLinks.eq(1).hasClass('add_new_sprint')) {
+      $buttonLinks.eq(1).attr('target', '_blank');
+    }
 
     $buttonLinks.insertAfter($header);
 
