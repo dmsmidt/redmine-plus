@@ -239,8 +239,9 @@
 }
 
 #backlogs_container .stories .story_field {
-  height: inherit!important;
+  height: inherit !important;
 }
+
 #taskboard .issue .t {
   line-height: 8px;
 }
@@ -284,9 +285,11 @@
   #toolbar {
     height:60px !important;
   }
+
   .tq-sticky-toolbar #board_header {
     top: 60px !important;
   }
+
   #impediments {
     margin-top: 46px;
   }
