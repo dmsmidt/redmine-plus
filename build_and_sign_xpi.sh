@@ -1,4 +1,6 @@
-#!/usr/bin/env bash -e
+#!/usr/bin/env bash
+
+set -e
 
 #
 # Purpose: Pack and sign a Webextension extension directory into xpi format.
