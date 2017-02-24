@@ -6,19 +6,17 @@ function sendDataToExtension(key, value) {
 
 jQuery(document).ready(function($) {
   if ($("#taskboard").length) {
+    var tooltipData = {};
 
+    $('.story_tooltip').each(function(){
+      var $tooltip = $(this),
+        storyId = $tooltip.find('a').text();
+
+      tooltipData[storyId] = $tooltip.find('.tooltip_text').html();
+    });
+
+    // The first argument is used as event name to be triggered in the extension
+    // JS.
+    sendDataToExtension('taskboardTooltipData', tooltipData);
   }
-  var tooltipData = {};
-
-  $('.story_tooltip').each(function(){
-    var $tooltip = $(this),
-      storyId = $tooltip.find('a').text();
-
-    tooltipData[storyId] = $tooltip.data('oldtitle');
-  });
-
-  // The first argument is used as event name to be triggered in the extension
-  // JS.
-  sendDataToExtension('taskboardTooltipData', tooltipData);
-
 });

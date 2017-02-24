@@ -1,6 +1,6 @@
 # TQ Redmine Plus
 
-This Chrome and Firefox plugins adds magic to Redmine. It particularity enhances the taskboard.
+This Chrome and Firefox plugins adds magic to Redmine. It particulary enhances the taskboard.
 
 ## Compatibility
 

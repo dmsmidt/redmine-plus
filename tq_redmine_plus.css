@@ -217,8 +217,9 @@
   z-index: 999;
 }
 
-.tq-sticky-toolbar #main {
-  padding-top: 30px;
+.tq-sticky-toolbar #board_header {
+  position: fixed !important;
+  top: 30px !important;
 }
 
 #toolbar {
@@ -227,6 +228,21 @@
 
 #toolbar .links {
   background-color: #CCCCCC;
+}
+
+#impediments {
+  margin-top: 16px;
+}
+
+.userselect {
+  margin-top: 4px;
+}
+
+#backlogs_container .stories .story_field {
+  height: inherit!important;
+}
+#taskboard .issue .t {
+  line-height: 8px;
 }
 
 /* Chosen overwrites */
@@ -260,5 +276,18 @@
   .chosen-container .chosen-results-scroll-up span {
     /* Two images hack to support at least one working image in chrome or firefox*/
     background-image: url('chrome-extension://__MSG_@@extension_id__/libraries/chosen/chosen-sprite@2x.png'), url('moz-extension://751da5d6-61bc-4dca-8d75-d5c3448b8050/libraries/chosen/chosen-sprite@2x.png') !important;
+  }
+}
+
+/* Breakpoints, the top toolbar stacks on top of each other in two rows. */
+@media only screen and (max-width: 1200px){
+  #toolbar {
+    height:60px !important;
+  }
+  .tq-sticky-toolbar #board_header {
+    top: 60px !important;
+  }
+  #impediments {
+    margin-top: 46px;
   }
 }
