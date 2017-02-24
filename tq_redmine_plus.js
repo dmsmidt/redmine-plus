@@ -3,6 +3,8 @@ console.log('TQ Redmine Plus loaded');
 // Store things passed in from our custom TqRedminePlusStore API.
 internalStorage = {};
 
+var originalTimerWrapperSelector = '.time-logger-menu';
+
 // Listen for TqRedminePlusStore fired from the page with key/value pair data.
 $(document).on('TqRedminePlusStore', function(event) {
   var dataFromPage = event.detail;
@@ -35,7 +37,7 @@ if ($taskboard.length) {
 }
 
 // Enable chosen select for project switcher.
-$("#toolbar select, #quick-search select").chosen().on('change', function() {
+$("#project_quick_jump_box, #quick-search select").chosen().on('change', function() {
   // Get onchange attribute code and execute it.
   var onchangeCode = $(this).attr('onchange');
   if (onchangeCode.length) {
@@ -110,7 +112,7 @@ var processTaskboardTasks = function() {
       // Create timer start/pause toggle.
       var $timerToggle = $('<a class="tq-timer-button tq-timer-toggle tq-timer-start" "href="#"></a>').on('click.tq-timer-toggle', function() {
         // Refresh timer status after a click.
-        var $timer = $toolbarLinksTimer.contents().find('#time-tracker-menu'),
+        var $timer = $toolbarLinksTimer.contents().find(originalTimerWrapperSelector),
           $timerIcon = $timer.find('a.icon'),
           timerIsRunning = $timerIcon.hasClass('icon-clock'),
           timerIsPaused = $timerIcon.hasClass('icon-pause');
@@ -131,9 +133,10 @@ var processTaskboardTasks = function() {
         }
       });
 
-      // Create timer stop button.
+      // Create timer stop button on the task in the table.
+      // Add a click handler which finds the stop button from the Iframe in the top toolbar and click on it.
       var $timerStop = $('<a class="tq-timer-button tq-timer-stop" "href="#"></a>').on('click.tq-timer-stop', function() {
-        var $timer = $toolbarLinksTimer.contents().find('#time-tracker-menu'),
+        var $timer = $toolbarLinksTimer.contents().find(originalTimerWrapperSelector),
           $stopTimer = $timer.find('.icon-stop-action');
 
         $stopTimer[0].click();
@@ -192,7 +195,7 @@ var processTaskboardStories = function() {
       var regEx = /Status<\/b>:\s(.*?)</g;
       var match = regEx.exec(tooltipData);
 
-      if (typeof match[1] !== 'undefined') {
+      if (typeof match == 'object' && typeof match[1] !== 'undefined') {
         // Process tooltipData to get the status.
         var statusClass = createCssClass(match[1]);
 
@@ -251,7 +254,7 @@ $(document).ready(function() {
       $toolbarLinksTimer.attr('src', '/').on('load', function() {
         // Get iframe content.
         var $issuePage = $(this).contents(),
-          $originalTimer = $issuePage.find('#time-tracker-menu'),
+          $originalTimer = $issuePage.find(originalTimerWrapperSelector),
           $originalStartTimer = $originalTimer.find('.icon-start'),
           modifiedTimer;
 
