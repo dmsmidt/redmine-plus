@@ -49,9 +49,12 @@ var processBacklogs = function($statusElements) {
   // Add status classes to story list items.
   $statusElements.each(function(index, item) {
     var $itemStatus = $(item),
-      status = createCssClass($itemStatus.text());
+      $model = $itemStatus.closest('.model');
 
-    $itemStatus.closest('.model').attr('class', $itemStatus.data('original-classes')).addClass(status);
+    if (!$model.hasClass('editing')) {
+      var status = createCssClass($itemStatus.text());
+      $model.attr('class', $itemStatus.data('original-classes')).addClass(status);
+    }
   });
 };
 
@@ -210,7 +213,7 @@ $(document).ready(function() {
       // Make sure we don't run this multiple times in a row.
       clearTimeout(taskboarChangeTimer);
       taskboarChangeTimer = setTimeout(function() {
-        processBacklogs($(e.currentTarget));
+        processBacklogs($(e.currentTarget).find('.status_id > .t'));
       }, 200);
     });
 

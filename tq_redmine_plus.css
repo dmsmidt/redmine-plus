@@ -15,29 +15,53 @@
   background-color: white;
 }
 
-#backlogs_container .status_id {
-  padding: 3px;
+#backlogs_container .closedbacklog, #backlogs_container .backlog {
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+#backlogs_container .header .velocity {
+  padding-right: 7px !important;
+}
+
+#backlogs_container .backlogs-panel-inner {
+  padding: 10px 0 0 0 !important;
+}
+
+#backlogs_container .left-col {
+  padding-right: 10px;
+  box-sizing: border-box;
+}
+
+/* Backlog buttons */
+.backlog > a,
+body #backlogs_container .stories .story .id .t *,
+body #backlogs_container .editing .edit-actions a {
+  display: inline-block;
+  line-height: 1.6;
+  padding: 0 0.4em;
+  border: 1px solid #CC0000;
+  background: white;
+  cursor: pointer;
+  border-radius: 0;
+  height: auto;
+  width: auto;
 }
 
 .backlog > a {
-  display: inline-block;
-  line-height: 1.2;
-  padding: 0 0.4em;
-  border: 1px solid #CC0000;
   margin: 0.4em;
-  background-color: white;
-  cursor: pointer;
 }
 
 .backlog > a:first-child {
   margin-left: 0.4em;
 }
 
-.backlog > a:hover {
+.backlog > a:hover,
+body #backlogs_container .stories .story .id .t *:hover,
+body #backlogs_container .editing .edit-actions a:hover {
   text-decoration: none;
-  opacity: 0.7;
-  background-color: #CC0000;
-  color: white;
+  background: #cc493e !important;
+  color: white !important;
 }
 
 #backlogs_container .backlog .model {
@@ -48,7 +72,47 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-#backlogs_container .backlog .model.approved {
+#backlogs_container .stories .story {
+  background-color: transparent !important;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+#backlogs_container .stories .story_field {
+  padding: 0 !important;
+  line-height: 1.5;
+}
+
+#backlogs_container .stories .story:hover {
+  background-color: rgba(182, 182, 182, 0.2) !important;
+}
+
+#backlogs_container .stories .story:last-child {
+  border-bottom: none !important;
+}
+
+#backlogs_container .stories .story.editing {
+  padding: 5px;
+  border: 2px solid #cc493e;
+}
+
+#backlogs_container .stories .story.editing .subject.editor {
+  border: none;
+  resize: none;
+  outline: none;
+  background: transparent;
+}
+
+#backlogs_container .editing .edit-actions a {
+  margin: 5px 0 0 5px !important;
+}
+
+#backlogs_container .stories .editing .edit-actions {
+  clear: none !important;
+  float: right;
+}
+
+#backlogs_container .backlog .model.approved:not(.editing) {
   background-color: #00a300 !important;
   opacity: .5;
   color: white;
@@ -58,7 +122,7 @@
   background-color: rgba(0, 163, 0, 0.2);
 }
 
-#backlogs_container .backlog .model.closed {
+#backlogs_container .backlog .model.closed:not(.editing) {
   background-color: #b6b6b6 !important;
   opacity: .5;
 }
@@ -67,7 +131,7 @@
   background-color: rgba(182, 182, 182, 0.2);
 }
 
-#backlogs_container .backlog .model.ready-for-test {
+#backlogs_container .backlog .model.ready-for-test:not(.editing) {
   background-color: #ffd800 !important;
   opacity: .5;
   color: black;
@@ -77,7 +141,7 @@
   background-color: rgba(255, 216, 0, 0.2);
 }
 
-#backlogs_container .backlog .model.ready-to-deploy {
+#backlogs_container .backlog .model.ready-to-deploy:not(.editing) {
   background-color: #0062FF !important;
   opacity: .75;
   color: white;
@@ -87,7 +151,7 @@
   background-color: rgba(0, 98, 255, 0.2);
 }
 
-#backlogs_container .backlog .model.rejected {
+#backlogs_container .backlog .model.rejected:not(.editing) {
   background-color: #CC0000 !important;
   opacity: .5;
   color: white;
@@ -97,9 +161,8 @@
   background-color: rgba(204, 0, 0, 0.2);
 }
 
-#backlogs_container .backlog .model.in-progress {
-  color: #CC0000;
-  border-bottom: 1px solid #CC0000;
+#backlogs_container .backlog .model.in-progress:not(.editing) .status_id {
+  color: #00a300;
 }
 
 #backlogs_container .backlog .model:hover {
