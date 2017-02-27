@@ -73,9 +73,24 @@ body #backlogs_container .editing .edit-actions a:hover {
 }
 
 #backlogs_container .stories .story {
-  background-color: transparent !important;
-  box-sizing: border-box;
+  background-color: white !important;
+  box-sizing: border-box !important;
   padding: 5px;
+  /* Need auto dimensions for during dragging. */
+  height: auto !important;
+}
+
+#backlogs_container .stories .story:last-child {
+  border-bottom: none !important;
+}
+
+#backlogs_container .stories .story[style*="absolute"] {
+  box-shadow: 5px 5px 2px rgba(0,0,0, 0.3);
+  border: 1px solid grey !important;
+}
+
+#backlogs_container .stories .story > div {
+
 }
 
 #backlogs_container .stories .story_field {
@@ -85,10 +100,6 @@ body #backlogs_container .editing .edit-actions a:hover {
 
 #backlogs_container .stories .story:hover {
   background-color: rgba(182, 182, 182, 0.2) !important;
-}
-
-#backlogs_container .stories .story:last-child {
-  border-bottom: none !important;
 }
 
 #backlogs_container .stories .story.editing {
