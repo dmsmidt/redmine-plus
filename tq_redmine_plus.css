@@ -84,6 +84,7 @@ body #backlogs_container .editing .edit-actions a:hover {
   border-bottom: none !important;
 }
 
+/*Drag styling*/
 #backlogs_container .stories .story[style*="absolute"] {
   box-shadow: 5px 5px 2px rgba(0,0,0, 0.3);
   border: 1px solid grey !important;
