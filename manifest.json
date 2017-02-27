@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "TQ Redmine Plus",
   "description": "Adds helpful magic to Redmine.",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",

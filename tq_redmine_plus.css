@@ -78,6 +78,7 @@ body #backlogs_container .editing .edit-actions a:hover {
   padding: 5px;
   /* Need auto dimensions for during dragging. */
   height: auto !important;
+  position: relative;
 }
 
 #backlogs_container .stories .story:last-child {
@@ -89,10 +90,6 @@ body #backlogs_container .editing .edit-actions a:hover {
   box-shadow: 5px 5px 2px rgba(0,0,0, 0.3);
   border: 1px solid grey !important;
   opacity: 1 !important;
-}
-
-#backlogs_container .stories .story > div {
-
 }
 
 #backlogs_container .stories .story_field {
@@ -114,15 +111,39 @@ body #backlogs_container .editing .edit-actions a:hover {
   resize: none;
   outline: none;
   background: transparent;
+  width: 100% !important;
+  padding: 5px 200px 5px 95px !important;
+  box-sizing: border-box;
+}
+
+#backlogs_container .stories .story.editing .tracker_id.editor {
+  position: absolute;
+  left: 5px;
+  width: 90px;
+  max-width: none !important;
 }
 
 #backlogs_container .editing .edit-actions a {
-  margin: 5px 0 0 5px !important;
+  margin: 0 0 0 5px !important;
 }
 
 #backlogs_container .stories .editing .edit-actions {
   clear: none !important;
-  float: right;
+  position: absolute;
+  bottom: 0;
+  right: 5px;
+  height: 24px !important;
+}
+
+#backlogs_container .stories .story .status_id {
+  width: 150px !important;
+  position: absolute;
+  right: 50px;
+}
+
+#backlogs_container .stories .story.editing input.story_points.editor {
+  position: absolute;
+  right: 5px;
 }
 
 #backlogs_container .backlog .model.approved:not(.editing) {
