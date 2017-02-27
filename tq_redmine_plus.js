@@ -45,16 +45,6 @@ $("#project_quick_jump_box, #quick-search select").chosen().on('change', functio
   }
 });
 
-// Generic function to create nice css class names for a given string.
-var createCssClass= function(text) {
-  return text.replace(/[^a-z0-9]/g, function(s) {
-    var c = s.charCodeAt(0);
-    if (c == 32) return '-';
-    if (c >= 65 && c <= 90) return s.toLowerCase();
-    return ('000' + c.toString(16)).slice(-4);
-  });
-};
-
 var processBacklogs = function($statusElements) {
   // Add status classes to story list items.
   $statusElements.each(function(index, item) {
@@ -200,7 +190,7 @@ var processTaskboardStories = function() {
         var statusClass = createCssClass(match[1]);
 
         // Add class to the matching story row.
-        $('#story_' + storyId).attr('class', '').addClass(statusClass);
+        $('#story_' + storyId).attr('class', 'story-swimlane').addClass(statusClass);
       }
     });
   });
@@ -216,7 +206,7 @@ $(document).ready(function() {
 
     processBacklogs($statusElements);
 
-    $stories.on('DOMSubtreeModified', function (e) {
+    $stories.on('DOMSubtreeModified.tq-stories', function (e) {
       // Make sure we don't run this multiple times in a row.
       clearTimeout(taskboarChangeTimer);
       taskboarChangeTimer = setTimeout(function() {
@@ -335,11 +325,11 @@ $(document).ready(function() {
     });
 
     // Reinitialize the taskboard tasks when something changes.
-    $taskboard.on("DOMSubtreeModified", function() {
+    $taskboard.on("DOMSubtreeModified.tq-taskboard", function() {
       // Make sure we don't run this multiple times in a row.
       clearTimeout(taskboarChangeTimer);
       taskboarChangeTimer = setTimeout(function() {
-        processTaskboardTasks();
+       processTaskboardTasks();
       }, 200);
     });
 
