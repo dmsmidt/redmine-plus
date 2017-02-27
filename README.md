@@ -24,6 +24,7 @@ The following software has been tested to work (partially).
     - Visually show the timer status for the active task.
     - Sticky toolbar.
     - Colored rows based on the story status.
+    - Bring back easy new task creation by clicking in a "new" cell.
 - Full issue view
     - Always show all fields in the "Change properties " fieldset (no more clicking on "more").
     - On update, prefill the parent (story) ID in the log comment field.

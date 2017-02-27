@@ -225,6 +225,8 @@ $(document).ready(function() {
 
   // Only enable taskboard enhancement if there is a taskboard.
   if ($taskboard.length) {
+    var $storyRows = $taskboard.find('.story-swimlane').add('#impediments tr');
+
     // Use sticky header.
     getStorage({redmineTaskboardStickyToolbar: true}, function(items) {
       if (items.redmineTaskboardStickyToolbar) {
@@ -320,6 +322,18 @@ $(document).ready(function() {
         // Auto start timer on load.
         if ($originalStartTimer.length) {
           $originalStartTimer[0].click();
+        }
+      });
+    });
+
+    // Allow creating new tasks by clicking in a cell in the 'New' column.
+    $storyRows.each(function() {
+      var $storyRow = $(this);
+
+      $storyRow.find('> td').eq(1).click(function(e) {
+        // Do not trigger 'add new task' when clicking on an existing task.
+        if ($(e.target).closest('.task').length === 0) {
+          $storyRow.find('.add_new').click();
         }
       });
     });
