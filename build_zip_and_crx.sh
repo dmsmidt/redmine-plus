@@ -2,21 +2,24 @@
 
 set -e
 
-#
-# Purpose: Pack a Chromium extension directory into crx format
+# Purpose: Pack a Chromium extension directory into zip and crx format
 
-dir=.
+dir=''
 key=./../redmine-plus.pem
 name=redmine-plus
-crx="$name.crx"
+crx="./build/$name.crx"
+zip="./build/$name.zip"
 pub="$name.pub"
 sig="$name.sig"
-zip="$name.zip"
-trap 'rm -f "$pub" "$sig" "$zip"' EXIT
+
+# Cleanup after exit.
+trap 'rm -f "$pub" "$sig"' EXIT
 
 # zip up the crx dir
 cwd=$(pwd -P)
 (cd "$dir" && zip -qr -9 -X "$cwd/$zip" . -x .git/\* build/\* node_modules/\* .idea/\* ./.web-extension-id)
+
+echo "Wrote $zip"
 
 # signature
 openssl sha1 -sha1 -binary -sign "$key" < "$zip" > "$sig"
@@ -36,5 +39,5 @@ sig_len_hex=$(byte_swap $(printf '%08x\n' $(ls -l "$sig" | awk '{print $5}')))
 (
   echo "$crmagic_hex $version_hex $pub_len_hex $sig_len_hex" | xxd -r -p
   cat "$pub" "$sig" "$zip"
-) > "./build/$crx"
+) > "$crx"
 echo "Wrote $crx"
