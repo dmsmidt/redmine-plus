@@ -1,6 +1,5 @@
 {
   "name": "redmine-plus",
-  "version": "0.11.3",
   "description": "Adds magic to Redmine.",
   "main": "redmine-plus.js",
   "dependencies": {},
