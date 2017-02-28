@@ -209,7 +209,7 @@
     if ($backlogsContainer.length) {
       var $stories = $backlogsContainer.find('.story'),
         $statusElements = $stories.find('.status_id > .t'),
-        originalStoryClasses = $stories.eq(0).attr('class');
+        originalStoryClasses = $stories.eq(0).removeClass('closed').attr('class');
 
       $statusElements.data('original-classes', originalStoryClasses);
 
