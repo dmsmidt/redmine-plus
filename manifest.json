@@ -26,7 +26,7 @@
   "content_scripts": [
     {
       "matches": [
-        "*://support.triquanta.nl/*"
+        "*://*/*"
       ],
       "js": [
         "libraries/jquery/jquery-2.2.3.min.js",
