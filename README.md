@@ -1,11 +1,17 @@
 # Redmine Plus
 
-This Chrome and Firefox plugins adds magic to Redmine. It particulary enhances the taskboard.
+This Chrome and Firefox plugins adds magic to Redmine. 
+It particularly enhances the backlog and taskboard of the Redmine Backlogs plugin.
 
 ## Compatibility
 
-The following software has been tested to work (partially).
+The following Redmine and plugin versions are tested:
+- Redmine 2.6.10
+- Redmine Backlogs v1.0.6
+- Time logger 0.5.4
+- Redmine Timesheet Plugin 0.7.0
 
+The following software has been tested to work (at least partially):
 - Chrome 50+
 - Firefox 48+
 
@@ -30,20 +36,3 @@ The following software has been tested to work (partially).
     - On update, prefill the parent (story) ID in the log comment field.
 - Timer stop
     - Prefill the parent (story) ID in the log comment field.
-
-## Install
-
-### Firefox
-
-- Download the latest extension file (.xpi) via the Download tabs.
-- Drag the downloaded file onto Firefox.
-- Accept the install.
-- Refresh Redmine if open.
-
-### Chrome
-
-- Download the latest extension file (.crx) via the Download tabs.
-- Open the extensions tab ( More Tools -> Extensions).
-- Drag the downloaded file onto this tab.
-- Click "Add extension".
-- Refresh Redmine if open.
