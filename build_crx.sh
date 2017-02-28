@@ -6,8 +6,8 @@ set -e
 # Purpose: Pack a Chromium extension directory into crx format
 
 dir=.
-key=./../tq_redmine_plus.pem
-name=tq_redmine_plus
+key=./../redmine-plus.pem
+name=redmine-plus
 crx="$name.crx"
 pub="$name.pub"
 sig="$name.sig"

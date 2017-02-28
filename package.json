@@ -1,23 +1,21 @@
 {
-  "name": "tq_redmine_plus",
-  "version": "0.5.0",
-  "description": "Adds helpful magic to Redmine.",
-  "main": "tq_redmine_plus.js",
+  "name": "redmine-plus",
+  "version": "0.11.3",
+  "description": "Adds magic to Redmine.",
+  "main": "redmine-plus.js",
   "dependencies": {},
   "devDependencies": {
+    "chrome-webstore-upload-cli": "^1.1.1",
     "web-ext": "^1.2.4"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/triquanta/tq-redmine-plus.git"
+    "url": "git@github.com:dmsmidt/redmine-plus.git"
   },
   "keywords": [
     "Redmine"
   ],
   "author": "D.M. Smidt",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/triquanta/tq-redmine-plus#readme"
+  "homepage": "https://github.com/dmsmidt/redmine-plus/blob/master/README.md"
 }

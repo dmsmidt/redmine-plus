@@ -1,4 +1,4 @@
-# TQ Redmine Plus
+# Redmine Plus
 
 This Chrome and Firefox plugins adds magic to Redmine. It particulary enhances the taskboard.
 
