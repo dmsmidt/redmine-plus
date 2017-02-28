@@ -31,6 +31,7 @@ The following software has been tested to work (at least partially):
     - Sticky toolbar.
     - Colored rows based on the story status.
     - Bring back easy new task creation by clicking in a "new" cell.
+    - Allow submitting a new task or task changes by pressing "Ctrl + Enter"
 - Full issue view
     - Always show all fields in the "Change properties " fieldset (no more clicking on "more").
     - On update, prefill the parent (story) ID in the log comment field.

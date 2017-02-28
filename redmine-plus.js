@@ -243,6 +243,16 @@
         }
       });
 
+      // Allow submitting a task editor by pressing Ctrl + Enter.
+      $(document).on("keypress.tq-editor", function(e) {
+        // Get the task editor.
+        var $taskEditor = $('#task_editor').eq(0);
+
+        if ($taskEditor.length && e.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
+          $taskEditor.closest('.ui-dialog').find('.ui-dialog-buttonset > button').eq(1).click();
+        }
+      });
+
       // Initialize timer if configured (or by default).
       getStorage({redmineTaskboardTimer: true}, function(items) {
         if (!items.redmineTaskboardTimer) {
