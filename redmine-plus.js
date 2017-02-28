@@ -1,6 +1,6 @@
 (function() {
   // Check if we can detect Redmine, if not stop execution.
-  if (!$('meta[content="Redmine"]').length) {
+  if (!$('meta[content="Redmine"]').length && !$('meta[content="Redmine Backlogs"]').length) {
     return;
   }
 
