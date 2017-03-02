@@ -17,7 +17,7 @@ trap 'rm -f "$pub" "$sig"' EXIT
 
 # zip up the crx dir
 cwd=$(pwd -P)
-(cd "$dir" && zip -qr -9 -X "$cwd/$zip" . -x .git/\* build/\* node_modules/\* .idea/\* ./.web-extension-id)
+(cd "$dir" && zip -qr -9 -X "$cwd/$zip" . -x .git/\* build/\* node_modules/\* .idea/\* ./.web-extension-id ./build_* ./.gitignore ./README.md ./LICENSE)
 
 echo "Wrote $zip"
 
