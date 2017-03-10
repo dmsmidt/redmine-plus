@@ -136,12 +136,19 @@ body #backlogs_container .editing .edit-actions a:hover {
 }
 
 #backlogs_container .stories .story .status_id {
+  width: 100px !important;
+  position: absolute;
+  right: 30px;
+}
+
+#backlogs_container .stories .story.editing .status_id {
   width: 150px !important;
   position: absolute;
   right: 50px;
 }
 
-#backlogs_container .stories .story.editing input.story_points.editor {
+#backlogs_container .stories .story.editing input.story_points.editor,
+#backlogs_container .stories .story .story_points {
   position: absolute;
   right: 5px;
 }
@@ -337,6 +344,11 @@ body #backlogs_container .editing .edit-actions a:hover {
 
 #backlogs_container .stories .story_field {
   height: inherit !important;
+}
+
+#backlogs_container .stories .story_field.subject {
+  margin-right: 150px;
+  overflow: hidden;
 }
 
 #taskboard .issue .t {
